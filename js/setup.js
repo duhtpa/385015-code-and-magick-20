@@ -39,7 +39,7 @@ var EYES_COLOR = [
   'green'
 ];
 
-var randomInteger = function (min, max) {
+var getRandomInteger = function (min, max) {
   var rand = min + Math.random() * (max - min + 1);
   return Math.round(rand);
 };
@@ -55,9 +55,9 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template')
 
 var getWizard = function () {
   var wizard = {
-    name: WIZARD_NAMES[randomInteger(0, WIZARD_NAMES.length - 1)] + ' ' + WIZARD_SURNAMES[randomInteger(0, WIZARD_SURNAMES.length - 1)],
-    coatColor: COAT_COLOR[randomInteger(0, COAT_COLOR.length - 1)],
-    eyesColor: EYES_COLOR[randomInteger(0, EYES_COLOR.length - 1)]
+    name: WIZARD_NAMES[getRandomInteger(0, WIZARD_NAMES.length - 1)] + ' ' + WIZARD_SURNAMES[getRandomInteger(0, WIZARD_SURNAMES.length - 1)],
+    coatColor: COAT_COLOR[getRandomInteger(0, COAT_COLOR.length - 1)],
+    eyesColor: EYES_COLOR[getRandomInteger(0, EYES_COLOR.length - 1)]
   };
 
   return wizard;
