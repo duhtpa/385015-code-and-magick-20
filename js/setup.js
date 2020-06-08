@@ -1,5 +1,7 @@
 'use strict';
 
+var WIZARDS_COUNT = 4;
+
 var WIZARD_NAMES = [
   'Иван',
   'Хуан Себастьян',
@@ -73,10 +75,14 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < 4; i++) {
-  fragment.appendChild(renderWizard(getWizard()));
-}
-similarListElement.appendChild(fragment);
+var renderWizardsList = function (count) {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < count; i++) {
+    fragment.appendChild(renderWizard(getWizard()));
+  }
+  similarListElement.appendChild(fragment);
+};
+
+renderWizardsList(WIZARDS_COUNT);
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
