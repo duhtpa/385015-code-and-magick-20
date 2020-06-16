@@ -41,6 +41,14 @@ var EYES_COLOR = [
   'green'
 ];
 
+var FIREBALL_COLOR = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
+
 var getRandomInteger = function (min, max) {
   var rand = min + Math.random() * (max - min + 1);
   return Math.round(rand);
@@ -86,3 +94,122 @@ var renderWizardsList = function (count) {
 renderWizardsList(WIZARDS_COUNT);
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
+
+// 4. Обработка событий. Открытие/закрытие окна настройки персонажа
+var setupOpen = document.querySelector('.setup-open');
+var setup = document.querySelector('.setup');
+var setupClose = setup.querySelector('.setup-close');
+
+var onPopupEscPress = function (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closePopup();
+  }
+};
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function () {
+  setup.classList.add('hidden');
+
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    closePopup();
+  }
+});
+
+// 4. Обработка событий. Валидация ввода имени персонажа
+var MIN_NAME_LENGTH = 2;
+var MAX_NAME_LENGTH = 25;
+
+var userNameInput = document.querySelector('.setup-user-name');
+
+userNameInput.addEventListener('invalid', function () {
+  if (userNameInput.validity.valueMissing) {
+    userNameInput.setCustomValidity('Обязательное поле');
+  } else {
+    userNameInput.setCustomValidity('');
+  }
+});
+
+userNameInput.addEventListener('input', function () {
+  var valueLength = userNameInput.value.length;
+
+  if (valueLength < MIN_NAME_LENGTH) {
+    userNameInput.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) + ' симв.');
+  } else if (valueLength > MAX_NAME_LENGTH) {
+    userNameInput.setCustomValidity('Удалите лишние ' + (valueLength - MAX_NAME_LENGTH) + ' симв.');
+  } else {
+    userNameInput.setCustomValidity('');
+  }
+});
+
+var popupCreationWizard = document.querySelector('.setup-wizard-form');
+
+var wizardCoatColorSelected = document.querySelector('.setup-wizard .wizard-coat');
+var wizardEyesColorSelected = document.querySelector('.setup-wizard .wizard-eyes');
+var wizardFireballColorSelected = document.querySelector('.setup-fireball-wrap');
+var inputCoatColorSelected = document.getElementsByName('coat-color');
+var inputEyesColorSelected = document.getElementsByName('eyes-color');
+var inputFireballColorSelected = document.getElementsByName('fireball-color');
+
+popupCreationWizard.addEventListener('click', function (evt) {
+  var wizardParameter = evt.target.classList.value;
+  var wizardColorArr = getWizardColorParameter(wizardParameter);
+
+  if (wizardParameter === 'setup-fireball') {
+    var fireballColor = FIREBALL_COLOR[getRandomInteger(0, FIREBALL_COLOR.length - 1)];
+    wizardFireballColorSelected.style = 'background-color:' + fireballColor;
+  } else {
+    evt.target.style.fill = wizardColorArr[getRandomInteger(0, wizardColorArr.length - 1)];
+  }
+
+  setColorsInputs(fireballColor);
+}, true);
+
+var setColorsInputs = function (fireballColor) {
+  inputCoatColorSelected[0].value = wizardCoatColorSelected.style.fill;
+
+  if (wizardFireballColorSelected.style.backgroundColor) {
+    inputFireballColorSelected[0].value = fireballColor;
+  }
+
+  if (wizardEyesColorSelected.style.fill) {
+    inputEyesColorSelected[0].value = wizardEyesColorSelected.style.fill;
+  }
+};
+
+var getWizardColorParameter = function (wizardParameter) {
+  var arrColorsName;
+
+  if (wizardParameter === 'wizard-coat') {
+    arrColorsName = COAT_COLOR;
+  } else if (wizardParameter === 'wizard-eyes') {
+    arrColorsName = EYES_COLOR;
+  } else if (wizardParameter === 'setup-fireball') {
+    arrColorsName = FIREBALL_COLOR;
+  }
+
+  return arrColorsName;
+};
