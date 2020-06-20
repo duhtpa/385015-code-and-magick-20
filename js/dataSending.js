@@ -18,7 +18,7 @@
       var arrColorsName = window.colorize.getWizardColorParameter(wizardParameter);
       var fireballColor = window.colorize.getColorByGroup(arrColorsName);
       wizardFireballColorSelected.style = 'background-color:' + fireballColor;
-    } else {
+    } else if (wizardParameter === 'wizard-coat' || wizardParameter === 'wizard-eyes') {
       evt.target.style.fill = window.colorize.getColorByGroup(wizardColorArr);
     }
 
