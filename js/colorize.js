@@ -26,25 +26,28 @@
     '#e6e848'
   ];
 
-  window.colorize = {
-    getWizardColorParameter: function (wizardParameter) {
-      var arrColorsName;
+  var getWizardColorParameter = function (wizardParameter) {
+    var arrColorsName;
 
-      if (wizardParameter === 'wizard-coat') {
-        arrColorsName = COAT_COLOR;
-      } else if (wizardParameter === 'wizard-eyes') {
-        arrColorsName = EYES_COLOR;
-      } else if (wizardParameter === 'setup-fireball') {
-        arrColorsName = FIREBALL_COLOR;
-      }
-
-      return arrColorsName;
-    },
-
-    getColorByGroup: function (colorGroup) {
-      var color = colorGroup[window.util.randomize(0, colorGroup.length - 1)];
-
-      return color;
+    if (wizardParameter === 'wizard-coat') {
+      arrColorsName = COAT_COLOR;
+    } else if (wizardParameter === 'wizard-eyes') {
+      arrColorsName = EYES_COLOR;
+    } else if (wizardParameter === 'setup-fireball') {
+      arrColorsName = FIREBALL_COLOR;
     }
+
+    return arrColorsName;
+  };
+
+  var getColorByGroup = function (colorGroup) {
+    var color = colorGroup[window.util.randomize(0, colorGroup.length - 1)];
+
+    return color;
+  };
+
+  window.colorize = {
+    getWizardColorParameter: getWizardColorParameter,
+    getColorByGroup: getColorByGroup
   };
 })();
