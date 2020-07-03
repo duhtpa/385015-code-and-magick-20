@@ -2,11 +2,10 @@
 
 (function () {
   window.util = {
-    randomize: function (min, max) {
-      var rand = min + Math.random() * (max - min + 1);
-      return Math.round(rand);
+    randomize: function (array) {
+      var randomElementIndex = Math.floor(Math.random() * array.length);
+      return array[randomElementIndex];
     },
-
     isEscEvent: function (evt, action) {
       if (evt.key === 'Escape') {
         action();

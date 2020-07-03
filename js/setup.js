@@ -41,15 +41,15 @@
     }));
   };
 
-  window.colorize.wizard.onEyesChange = function (color) {
+  window.colorize.wizard.onEyesChange = window.debounce(function (color) {
     eyesColor = color;
     updateWizards();
-  };
+  });
 
-  window.colorize.wizard.onCoatChange = function (color) {
+  window.colorize.wizard.onCoatChange = window.debounce(function (color) {
     coatColor = color;
     updateWizards();
-  };
+  });
 
   var successHandler = function (data) {
     wizards = data;

@@ -31,11 +31,6 @@
     '#e6e848'
   ];
 
-  var getRandomElement = function (array) {
-    var randomElementIndex = Math.floor(Math.random() * array.length);
-    return array[randomElementIndex];
-  };
-
   var wizard = {
     onEyesChange: function (color) {
       return color;
@@ -50,13 +45,13 @@
   var wizardEyesElement = wizardElement.querySelector('.wizard-eyes');
 
   wizardCoatElement.addEventListener('click', function () {
-    var newColor = getRandomElement(COAT_COLOR);
+    var newColor = window.util.randomize(COAT_COLOR);
     wizardCoatElement.style.fill = newColor;
     wizard.onCoatChange(newColor);
   });
 
   wizardEyesElement.addEventListener('click', function () {
-    var newColor = getRandomElement(EYES_COLOR);
+    var newColor = window.util.randomize(EYES_COLOR);
     wizardEyesElement.style.fill = newColor;
     wizard.onEyesChange(newColor);
   });
@@ -76,7 +71,7 @@
   };
 
   var getColorByGroup = function (colorGroup) {
-    var color = colorGroup[window.util.randomize(0, colorGroup.length - 1)];
+    var color = colorGroup[window.util.randomize(colorGroup)];
 
     return color;
   };
